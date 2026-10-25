@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TinyMarineTraffic (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TinyMarineTraffic (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

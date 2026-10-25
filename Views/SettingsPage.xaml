@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TinyMarineTraffic.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="Transparent">
+    <Grid Padding="16" RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button x:Name="BackButton" AutomationProperties.AutomationId="BackButton"
+                AutomationProperties.Name="Back to traffic" Click="Back_Click"
+                Style="{StaticResource FlyoutIconButtonStyle}" ToolTipService.ToolTip="Back to traffic">
+                <FontIcon Glyph="&#xE72B;" FontSize="16" />
+            </Button>
+            <TextBlock Text="Settings" Style="{StaticResource SubtitleTextBlockStyle}" VerticalAlignment="Center" />
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Spacing="8">
+                <ComboBox x:Name="SavedAreaPicker" Header="Saved areas" HorizontalAlignment="Stretch"
+                    AutomationProperties.AutomationId="SavedAreaPicker" SelectionChanged="SavedArea_Changed" />
+                <TextBlock x:Name="HomeAreaText" TextWrapping="Wrap"
+                    AutomationProperties.AutomationId="HomeAreaText" FontSize="12"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button x:Name="AddAreaButton" Content="Add area" Click="AddArea_Click"
+                        AutomationProperties.AutomationId="AddAreaButton" />
+                    <Button x:Name="DeleteAreaButton" Content="Delete" Click="DeleteArea_Click"
+                        AutomationProperties.AutomationId="DeleteAreaButton" />
+                    <Button x:Name="MakeHomeButton" Content="Set as home" Click="MakeHome_Click"
+                        AutomationProperties.AutomationId="MakeHomeButton" />
+                </StackPanel>
+                <TextBox x:Name="AreaNameBox" Header="Area name" MaxLength="40"
+                    AutomationProperties.AutomationId="AreaNameBox" />
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <NumberBox x:Name="LatitudeBox" Header="Latitude" Minimum="-80" Maximum="80"
+                        AutomationProperties.AutomationId="LatitudeBox" />
+                    <NumberBox x:Name="LongitudeBox" Grid.Column="1" Header="Longitude" Minimum="-180" Maximum="180"
+                        AutomationProperties.AutomationId="LongitudeBox" />
+                </Grid>
+                <NumberBox x:Name="RadiusBox" Header="Area half-width (nautical miles)" Minimum="2" Maximum="50"
+                    SmallChange="1" SpinButtonPlacementMode="Compact"
+                    AutomationProperties.AutomationId="RadiusBox" />
+                <Button x:Name="SaveAreaChangesButton" Content="Save changes" Click="SaveAreaChanges_Click"
+                    Style="{StaticResource AccentButtonStyle}" AutomationProperties.AutomationId="SaveAreaChangesButton" />
+                <InfoBar x:Name="InputStatus" IsOpen="False" IsClosable="False" Severity="Warning"
+                    AutomationProperties.AutomationId="InputStatus" />
+                <Expander Header="App settings" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                    AutomationProperties.AutomationId="AppSettingsExpander">
+                    <StackPanel Spacing="8">
+                        <ToggleSwitch x:Name="StartupToggle" Header="Start with Windows"
+                            AutomationProperties.AutomationId="StartupToggle" Toggled="StartupToggle_Toggled" />
+                        <TextBlock x:Name="StartupDescription" TextWrapping="Wrap"
+                            Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <TextBlock Text="AIS reports can be delayed or incomplete. This is not a navigation aid."
+                            TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <HyperlinkButton Content="Open Waters API and coverage" NavigateUri="https://openwaters.io/api/ais/"
+                            AutomationProperties.AutomationId="ApiLink" Padding="0,4" />
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
+        <TextBlock x:Name="VersionText" Grid.Row="2" Style="{StaticResource CaptionTextBlockStyle}"
+            Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+    </Grid>
+</Page>
