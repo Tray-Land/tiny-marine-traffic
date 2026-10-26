@@ -395,7 +395,8 @@ public sealed partial class FlyoutPage : Page, IDisposable
         {
             _coverage.MapElements.Add(new MapPolyline
             {
-                Path = new Geopath(new BasicGeoposition[] {
+                // CsWinRT cannot box BasicGeoposition arrays under Native AOT.
+                Path = new Geopath(new List<BasicGeoposition> {
                     Position(box.South, box.West), Position(box.North, box.West),
                     Position(box.North, box.East), Position(box.South, box.East), Position(box.South, box.West)}),
                 StrokeColor = _visuals.Color("MapVesselColor"),
