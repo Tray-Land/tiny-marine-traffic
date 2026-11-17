@@ -23,9 +23,9 @@ The flyout light-dismisses when you switch apps. Settings live inside it, not in
 
 ## Install
 
-No release has been published yet. Build from source below, or create a bundle with `build-msix-for-gh.ps1`.
+[<img src="docs/MSIX.svg" alt="Install TinyMarineTraffic (MSIX)" width="212">](https://github.com/Tray-Land/tiny-marine-traffic/releases/latest/download/TinyMarineTraffic.appinstaller)
 
-Releases are designed to provide one signed x64 + ARM64 `.msixbundle` and a [TinyMarineTraffic.appinstaller feed](https://github.com/Tray-Land/tiny-marine-traffic/releases/latest/download/TinyMarineTraffic.appinstaller), available after the first stable release. The feed selects the matching architecture, installs the Windows App Runtime dependency, and enables update checks on launch and in the background. Self-signed releases require trusting the publisher's signing certificate before sideloading.
+Download and open [TinyMarineTraffic.appinstaller](https://github.com/Tray-Land/tiny-marine-traffic/releases/latest/download/TinyMarineTraffic.appinstaller). Windows installs the right version for your PC (x64 or ARM64), adds the Windows App Runtime dependency, and keeps the app updated.
 
 Requirements: Windows 10 1809 (build 17763) or later, x64 or ARM64.
 
@@ -78,15 +78,13 @@ That is a **46.3% reduction** from the initial baseline, including the newer sav
 
 The release script is adapted from Tiny ATC. It writes the App Installer feed first, embeds the same bytes into each architecture's package, restores release-only manifest edits in `finally`, and checks the bundle identities, architectures, block maps, feed equality, and framework dependency assets.
 
-To check unsigned artifacts locally without a GitHub remote, tagging, signing, or uploading:
+To check unsigned artifacts locally without tagging, signing, or uploading:
 
 ```powershell
-.\build-msix-for-gh.ps1 -SkipRelease -NoSign `
-    -Repository Tray-Land/tiny-marine-traffic `
-    -OutputDirectory "$env:TEMP\TinyMarineTraffic-packages"
+.\build-msix-for-gh.ps1 -SkipRelease -NoSign -OutputRoot "$env:TEMP\TinyMarineTraffic-packages"
 ```
 
-For a real release, configure the correct GitHub `origin`, commit and push the source, bump `Package.appxmanifest`'s version, then run `.\build-msix-for-gh.ps1` from a PowerShell session with the maintainer's `sign-msix` function. It signs only the app bundle, preserves Microsoft's framework signatures, and creates a **draft** GitHub release. Publish a stable release to activate the `latest/download` feed. Differential update behavior requires two published versions and has not been verified here.
+For a release, commit and push the source, bump `Package.appxmanifest`'s version, then run `.\build-msix-for-gh.ps1` from a PowerShell session with the maintainer's `sign-msix` function. It signs only the app bundle, preserves Microsoft's framework signatures, and creates a **draft** GitHub release. Publish the draft without changing its tag, then run `.\build-msix-for-gh.ps1 -VerifyPublished` to confirm the stable `latest/download` link serves that version and every address in the feed downloads. The script is a copy of the `winui-tray-app` skill's; don't edit it here.
 
 ## Data and credits
 
